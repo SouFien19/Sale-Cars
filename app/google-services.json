@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "298153310837",
+    "project_id": "sale-cars-844cc",
+    "storage_bucket": "sale-cars-844cc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298153310837:android:f5d605b19271a58844963c",
+        "android_client_info": {
+          "package_name": "com.example.sale_cars"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsymqqrIZixNUQlMfsLN54qsbMKBxcu3Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
