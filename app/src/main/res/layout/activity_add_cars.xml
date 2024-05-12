@@ -8,6 +8,18 @@
     android:background="@android:color/white"
     tools:context=".add_cars">
 
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Add Car"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="0dp"
@@ -15,25 +27,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/titleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:text="Add Car"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+        app:layout_constraintTop_toBottomOf="@id/titleTextView">
 
         <ImageView
             android:id="@+id/carImageView"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:layout_below="@id/titleTextView"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:scaleType="centerCrop"
             android:src="@drawable/car_icon" />
 
@@ -49,10 +50,10 @@
         <EditText
             android:id="@+id/carTitleEditText"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/pickImageButton"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:hint="Car Title"
             android:inputType="text" />
@@ -60,26 +61,33 @@
         <EditText
             android:id="@+id/carDescriptionEditText"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/carTitleEditText"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:hint="Car Description"
             android:inputType="textMultiLine" />
+
+        <EditText
+            android:id="@+id/editTextPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/carDescriptionEditText"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Phone"
+            android:inputType="phone" />
 
         <Button
             android:id="@+id/addCarButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/carTitleEditText"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="160dp"
-            android:layout_marginEnd="143dp"
-            android:paddingStart="32dp"
-            android:paddingEnd="32dp"
-            android:text="Add Car"
-            android:textSize="18sp" />
+            android:layout_below="@id/editTextPhone"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:text="Add Car" />
 
     </RelativeLayout>
 

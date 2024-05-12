@@ -25,7 +25,7 @@ import com.google.firebase.storage.UploadTask;
 
 public class add_cars extends AppCompatActivity {
 
-    private EditText carTitleEditText, carDescriptionEditText;
+    private EditText carTitleEditText, carDescriptionEditText, Phone;
     private ImageView carImageView;
     private Button pickImageButton, addCarButton;
 
@@ -52,6 +52,7 @@ public class add_cars extends AppCompatActivity {
         carDescriptionEditText = findViewById(R.id.carDescriptionEditText);
         carImageView = findViewById(R.id.carImageView);
         pickImageButton = findViewById(R.id.pickImageButton);
+        Phone = findViewById(R.id.editTextPhone);
         addCarButton = findViewById(R.id.addCarButton);
 
         // Button click listeners
@@ -89,6 +90,7 @@ public class add_cars extends AppCompatActivity {
     private void addCarToDatabase() {
         final String carTitle = carTitleEditText.getText().toString().trim();
         final String carDescription = carDescriptionEditText.getText().toString().trim();
+        final String carPhone = Phone.getText().toString().trim();
 
         if (!carTitle.isEmpty() && imageUri != null) {
             if (currentUser != null) {
@@ -112,7 +114,7 @@ public class add_cars extends AppCompatActivity {
                                         String imageUrl = uri.toString();
 
                                         // Create Car object
-                                        Car car = new Car(carId, userId, carTitle, carDescription, imageUrl);
+                                        Car car = new Car(carId, userId, carTitle, carDescription, imageUrl, carPhone);
                                         // Add car to Firebase database
                                         databaseReference.child(carId).setValue(car);
 
@@ -123,6 +125,8 @@ public class add_cars extends AppCompatActivity {
 
                                         // Inform user
                                         Toast.makeText(add_cars.this, "Car added successfully!", Toast.LENGTH_SHORT).show();
+                                        Intent i= new Intent(add_cars.this, MainActivity.class);
+                                        startActivity(i);
                                     }
                                 });
                             }

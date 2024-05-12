@@ -1,14 +1,22 @@
 package com.example.sale_cars;
 
 public class Car {
-    private String carId, userId, carTitle, carDescription, imageUrl;
+    private String carId, userId, carTitle, carDescription, imageUrl, numero;
 
-    public Car(String carId, String userId, String carTitle, String carDescription, String imageUrl) {
+    public Car(String carId, String userId, String carTitle, String carDescription, String imageUrl, String numero) {
         this.carId = carId;
         this.userId = userId;
         this.carTitle = carTitle;
         this.carDescription = carDescription;
         this.imageUrl = imageUrl;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 
     public String getCarId() {
