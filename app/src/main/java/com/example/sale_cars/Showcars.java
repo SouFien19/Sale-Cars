@@ -1,6 +1,14 @@
 package com.example.sale_cars;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,10 +24,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class Showcars extends AppCompatActivity {
+    private static final String TAG = "Showcars";
     private TextView carTitleTextView;
     private TextView carDescriptionTextView;
     private ImageView carImageView;
+    private Button Callbtn;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,31 +40,74 @@ public class Showcars extends AppCompatActivity {
         carTitleTextView = findViewById(R.id.carTitleTextView);
         carDescriptionTextView = findViewById(R.id.carDescriptionTextView);
         carImageView = findViewById(R.id.imageView);
+        Callbtn = findViewById(R.id.Call);
+
+        String carId = getIntent().getStringExtra("carId");
+        Log.d(TAG, "carId: " + carId);
 
         // Set up Firebase Database Reference
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Images").child("1");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Cars").child(carId);
 
-        // Add ValueEventListener to listen for changes in the database
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // Check if data exists
                 if (snapshot.exists()) {
+                    // Get car details
+                    String imageUrl = snapshot.child("imageUrl").getValue(String.class);
                     String title = snapshot.child("carTitle").getValue(String.class);
                     String description = snapshot.child("carDescription").getValue(String.class);
-                    String imageUrl = snapshot.child("imageUrl").getValue(String.class);
 
-                    // Set text and image
+                    // Load the image using Glide
+                    Glide.with(Showcars.this)
+                            .load(imageUrl)
+                            .into(carImageView);
+
                     carTitleTextView.setText(title);
                     carDescriptionTextView.setText(description);
-                    Glide.with(Showcars.this).load(imageUrl).into(carImageView);
+                } else {
+                    // Data doesn't exist
+                    Log.d(TAG, "No data found for carId: " + carId);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Handle error
-                Toast.makeText(Showcars.this, "Failed to load car details.", Toast.LENGTH_SHORT).show();
+                // Handle database error
+                Log.e(TAG, "Database error: " + error.getMessage());
             }
         });
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // Check if data exists
+                if (snapshot.exists()) {
+                    Callbtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Get the phone number from the database
+                            String numero = snapshot.child("numero").getValue(String.class);
+                            // Call the method to make a phone call
+                            makePhoneCall(numero);
+                        }
+                    });
+                } else {
+                    // Data doesn't exist
+                    Log.d(TAG, "No data found for carId: " + carId);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle database error
+                Log.e(TAG, "Database error: " + error.getMessage());
+            }
+        });
+    }
+    private void makePhoneCall(String phoneNumber) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:" + phoneNumber));
+        startActivity(intent);
     }
 }
